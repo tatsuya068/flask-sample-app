@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  python:
+    build: ./docker/python/
+    container_name: flask_python
+    volumes:
+      - .:/code
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+  nginx:
+    build: ./docker/nginx/
+    container_name: flask_nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - python
+  db:
+    image: mysql:8.0
+    container_name: flask_db
+    hostname: mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    command:
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+    environment:
+      - MYSQL_ROOT_PASSWORD=flaskpass
+      - MYSQL_DATABASE=flasktest
+      - MYSQL_USER=flaskuser
+      - MYSQL_PASSWORD=flaskpass
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: flask_pma
+    hostname: phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - "9090:80"

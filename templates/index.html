@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <title>{{ name }}</title>
+</head>
+<body>
+    <header>
+        {% if name == "flask" %}
+            <h1>{{ name }}：flask学習</h1>
+        {% elif name %}
+            <h1>{{ name }}</h1>
+        {% else %}
+            <h1>ただのアニメ</h1>
+        {% endif %}
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#">ABOUT</a></li>
+            <li><a href="#">MAIN</a></li>
+            <li><a href="#">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>メインコンテンツ</h2>
+        <form action="/index" method="POST">
+            <input type="text" name="name" placeholder="Enter name">
+            <input type="submit" value="Submit">
+        </form>
+
+        <img src="/static/images/book.jpg" alt="本">
+
+        {% for book in books %}
+            <p>{{ book }}</p>
+        {% endfor %}
+
+        {% for item in items %}
+            <p>{{ item.name }}</p>
+        {% endfor %}
+    </main>
+
+    <footer>
+        <p>© 2023 Flask TEST</p>
+    </footer>
+</body>
+</html>
